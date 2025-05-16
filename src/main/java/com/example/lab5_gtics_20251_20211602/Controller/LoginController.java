@@ -13,11 +13,16 @@ public class LoginController {
     }
 
     @GetMapping("/redirect")
-    public String redirectByRole(Authentication auth) {
-        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-            return "redirect:/admin/home";
-        } else {
-            return "redirect:/user/home";
+    public String redirectByRole(Authentication authentication) {
+        if (authentication != null) {
+            boolean isAdmin = authentication.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+            if (isAdmin) {
+                return "redirect:/admin/adivinanzas";
+            } else {
+                return "redirect:/user/adivinanzas";
+            }
         }
+        return "redirect:/login";
     }
 }

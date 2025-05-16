@@ -1,0 +1,23 @@
+<!-- templates/fragments/navbar.html -->
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:fragment="navbar">
+    <nav>
+        <ul>
+            <li><a th:href="@{/admin/adivinanzas}" sec:authorize="hasRole('ADMIN')">Adivinanzas</a></li>
+            <li><a th:href="@{/admin/usuarios}" sec:authorize="hasRole('ADMIN')">Usuarios</a></li>
+            <li sec:authorize="hasRole('USER')"><a th:href="@{/user/juego}">Juego</a></li>
+            <li sec:authorize="hasRole('USER')"><a th:href="@{/user/ultimas}">Últimas Partidas</a></li>
+            <li>
+                <span th:text="|${#authentication.name} (${#authentication.authorities[0].authority})|"></span>
+            </li>
+
+            <li><a th:href="@{/logout}">Cerrar sesión</a></li>
+        </ul>
+        <p>Usuario: <span sec:authentication="name"></span> (<span sec:authentication="principal.authorities[0].authority"></span>)</p>
+    </nav>
+</div>
+
+
+
