@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Juego</title>
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<h2>Adivina el número</h2>
+<form method="post" th:action="@{/user/jugar}">
+    Número (1-100): <input type="number" name="numero" required>
+    <button type="submit">Adivinar</button>
+</form>
+
+<p th:text="${mensaje}"></p>
+<p th:if="${#session.getAttribute('intentosRestantes') != null}">
+    Intentos restantes: <span th:text="${#session.getAttribute('intentosRestantes')}"></span>
+</p>
+
+<h3>Historial de partidas:</h3>
+<table>
+    <tr><th>Fecha</th><th>Resultado</th><th>Intentos</th><th>Puntaje</th></tr>
+    <tr th:each="p : ${historial}">
+        <td th:text="${p.fecha}"></td>
+        <td th:text="${p.resultado}"></td>
+        <td th:text="${p.intentos}"></td>
+        <td th:text="${p.puntaje}"></td>
+    </tr>
+</table>
+</body>
+</html>
